@@ -5,8 +5,8 @@ const Input = ({ label, value, onChangeText, placeholder }) => {
     const { inputStyle, labelStyle, containerStyle } = styles;
 
     return (
-        <View style={containerStyle}>
-            <Text style={labelStyle}>{label}</Text>
+        <View >
+            <Text>{label}</Text>
             <TextInput
                 placeholder={placeholder}
                 style={inputStyle}
@@ -31,7 +31,8 @@ const styles = {
     labelStyle: {
         fontSize: 18,
         paddingLeft: 20,
-        flex: 1
+        flex: 1,
+        color:'blue'
 
     },
     containerStyle: {

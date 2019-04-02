@@ -12,7 +12,7 @@ class MyDatepicker extends Component {
       <View style={styles.containerStyle}>
         <Text style={styles.labelStyle}>{this.props.label}</Text>
         <DatePicker
-          style={{ width: 200, marginTop: 10 }}
+          style={{ width: 200, marginTop: 10,color:'yellow' }}
           date={this.state.date}
           mode="date"
           placeholder="select date"

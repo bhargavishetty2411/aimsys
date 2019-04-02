@@ -4,34 +4,22 @@ import { View, StyleSheet, TouchableOpacity, Text, Alert } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Card, CardSection, Button } from '../Common';
 import { connect } from 'react-redux'
-import ChildRegistrationForm from './ChildRegistrationForm';
-import { childUpdate, childCreate, deliveryUpdate } from '../../actions/ChildAction';
+import AttendanceRegistration from './AttendanceRegistration';
+import { AttendanceUpdate, AttendanceCreate } from '../../actions/AttendanceAction';
 
-class ChildRegistration extends Component {
+class AttendanceRegistrationForm extends Component {
+
     onButtonPress() {
-        const { HNumber, CName, CMotherId, status, option, health, babytype, DPickdob, DPickregdate, placedied } = this.props;
-        if (HNumber === undefined || CName === undefined || CMotherId === undefined || status === undefined || option === undefined || health === undefined || babytype === undefined || DPickdob === undefined || DPickregdate === undefined || placedied === undefined) {
-            Alert.alert(
-                'Enter all the details',
-                'record not inserted');
-        } 
-        if (status === 'Born') {
-            console.log('data here', CMotherId);
-            this.props.childCreate({ HNumber, CName, CMotherId, status, health, option, babytype, DPickdob, DPickregdate });
-            console.log('data here', CMotherId);
-            Alert.alert(
-
-                'Inserted Successfully',
-
-            );
-        } else {
-            this.props.deliveryUpdate({ status, placedied }, CMotherId);
-            Alert.alert(
-
-                'Inserted Successfully',
-
-            );
-        }
+        const { ChildName, gender, Dob, Regdate } = this.props;
+        this.props.AttendanceCreate({ ChildName, gender, Dob, Regdate });
+        Alert.alert(
+            'Oops !',
+            'Inserted Successfully',
+            [
+                { text: 'OK', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+            ],
+            { cancelable: false }
+        )
     }
 
     render() {
@@ -39,11 +27,11 @@ class ChildRegistration extends Component {
             <ScrollView>
                 <View style={styles.container} style={{ backgroundColor: '#355870' }}>
                     <Card>
-                        <ChildRegistrationForm {...this.props} edit='no' />
+                        <AttendanceRegistration {...this.props} />
 
                         <CardSection>
                             <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={this.onButtonPress.bind(this)}>
-                                <Text style={styles.loginText}>ADD</Text>
+                                <Text style={styles.loginText}>Register</Text>
                             </TouchableOpacity>
                         </CardSection>
                     </Card>
@@ -156,12 +144,11 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-
-    const { HNumber, CName, CMotherId, status, option, health, babytype, DPickdob, DPickregdate, placedied } = state.child;
-    console.log('registration inside tyyy mother id form ', CMotherId);
-    return { HNumber, CName, CMotherId, status, option, health, babytype, DPickdob, DPickregdate, placedied };
+    const { ChildName, gender, Dob, Regdate } = state.attendance;
+    return { ChildName, gender, Dob, Regdate };
 };
 
 export default connect(mapStateToProps, {
-    childUpdate, childCreate, deliveryUpdate
-})(ChildRegistration);
+    AttendanceUpdate, AttendanceCreate
+
+})(AttendanceRegistrationForm);

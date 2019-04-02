@@ -39,6 +39,18 @@ export default class Timeline extends Component {
                             </View>
                         </TouchableOpacity>
                     </View>
+                    
+                    <View style={styles.bottomitem}>
+                        <TouchableOpacity style={styles.bottomitemInner} 
+                        onPress={() => this.props.navigation.navigate('Attendance')}
+                        >
+                            <View style={styles.bottomitemInner}>
+                                <Text style={styles.bottomitemInnerContent}>Attendance</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+
+
                 </View>
             </View>
         );

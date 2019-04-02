@@ -15,12 +15,12 @@ import { fetchUser } from '../actions';
 class MainApp extends Component {
   componentWillMount() {
     const config = {
-      apiKey: 'AIzaSyAZnJ33pGi_YoONvwh8lH0PHc6fOYnbjoQ',
-      authDomain: 'authentication-ac30e.firebaseapp.com',
-      databaseURL: 'https://authentication-ac30e.firebaseio.com',
-      projectId: 'authentication-ac30e',
-      storageBucket: 'authentication-ac30e.appspot.com',
-      messagingSenderId: '882138772244'
+      apiKey: "AIzaSyAPb6cbba3ui5juo7XyRZk742FS9jdT56s",
+      authDomain: "aimsys-67e99.firebaseapp.com",
+      databaseURL: "https://aimsys-67e99.firebaseio.com",
+      projectId: "aimsys-67e99",
+      storageBucket: "aimsys-67e99.appspot.com",
+      messagingSenderId: "524773124768"
     };
     if (!firebase.apps.length) {
       firebase.initializeApp(config);
