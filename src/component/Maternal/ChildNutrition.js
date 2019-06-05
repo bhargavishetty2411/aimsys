@@ -1,321 +1,211 @@
 import React, { Component } from 'react';
-import { StyleSheet, Dimensions } from 'react-native';
-import {
-    Container,
-    Content,
-    ListItem,
-    Radio,
-    Card,
-    Text,
-    CheckBox,
-    Body,
-    Button,
-    CardItem,
-    Input
-} from 'native-base';
-import { ScrollView } from 'react-native-gesture-handler';
+import { StyleSheet, Dimensions, ScrollView, Alert, Text } from 'react-native';
+import { CardSection, Card } from '../Common';
+import { connect } from 'react-redux';
+import { NutritionUpdate, NutritionCreate } from '../../actions/NutritionAction';
+import ChildNutritionForm from './ChildNutritionForm';
+import { CardItem, Button } from 'native-base';
+
 
 class ChildNutrition extends Component {
-    static navigationOptions = {
-        title: 'Child Nutrition ',
-        headerStyle: {
-            backgroundColor: '#203546',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-            fontWeight: 'bold',
-        },
-    };
 
     constructor() {
         super();
         this.state = {
-            underweight: null,
-            isHidden: false,
-            isHidden1: false,
-            isHidden2: false,
-            well: false,
-            wasting: null,
-            stunting: null,
-            feedSelected: null,
-            breastfeedSelected: null,
-            birthweightSelected: null,
-            compliSelected: null,
-            institutionSelected:null
         };
     }
 
+    onButtonPress() {
+        const { HNumber, CName, weight, under, wast, stunt, lowbirth, breastfeed, exfeed, cfeed, ideli } = this.props;
+        if (HNumber === undefined || CName === undefined || weight === undefined || under === undefined || wast === undefined || stunt === undefined || lowbirth === undefined || breastfeed === undefined || exfeed === undefined || cfeed === undefined || ideli === undefined) {
+            Alert.alert(
+                'Enter all the details',
+                'record not inserted');
+        } else {
+            this.props.NutritionCreate({ HNumber, CName, weight, under, wast, stunt, lowbirth, breastfeed, exfeed, cfeed, ideli });
+            Alert.alert(
+                'Inserted Successfully',
+            );
+        }
+     }
+
     render() {
         return (
-
-            <Container>
-                <ScrollView>
-                    <Content>
-                        <Card>
-                            <CardItem>
-                                <Text>Underweight?</Text>
-                            </CardItem>
-                            <CardItem>
-                                <Text style={styles.textStyle}>Yes:</Text>
-                                <Radio
-                                    // eslint-disable-next-line max-len
-                                    onPress={() => this.setState({ underweight: 'yes', isHidden: true })}
-                                    selected={this.state.underweight === 'yes'}
-                                />
-                                <Text style={styles.textStyle}>No:</Text>
-                                <Radio
-                                    // eslint-disable-next-line max-len
-                                    onPress={() => this.setState({ underweight: 'no', isHidden: false })}
-                                    selected={this.state.underweight === 'no'}
-                                />
-                            </CardItem>
-
-                            {
-                                this.state.isHidden ?
-                                    <Card>
-                                        <ListItem>
-                                        <Input
-                                            placeholder='age'
-                                            label='Age'
-                                        />
-                                        </ListItem>
-                                        <ListItem>
-                                        <Input
-                                            placeholder='weight'
-                                            label='weight'
-                                        />
-                                        </ListItem>
-                                        
-                                    </Card>
-                                    : null
-                            }
-                        </Card>
-
-                        <Card>
-                            <CardItem>
-                                <Text>Wasting?</Text>
-                            </CardItem>
-                            <CardItem>
-                                <Text style={styles.textStyle}>Yes:</Text>
-                                <Radio
-                                    // eslint-disable-next-line max-len
-                                    onPress={() => this.setState({ wasting: 'yes', isHidden1:true })
-                                    }
-                                    selected={this.state.wasting === 'yes'}
-                                />
-                                <Text style={styles.textStyle}>No:</Text>
-                                <Radio
-                                    // eslint-disable-next-line max-len
-                                    onPress={() => this.setState({ wasting: 'no', isHidden1: false })}
-
-                                    selected={this.state.wasting === 'no'}
-                                />
-                            </CardItem>
-                            {
-                                this.state.isHidden1 ?
-                                    <Card>
-                                        <ListItem>
-                                        <Input
-                                            placeholder='age'
-                                            label='Age'
-                                        />
-                                        </ListItem>
-                                        <ListItem>
-                                        <Input
-                                            placeholder='weight'
-                                            label='weight'
-                                        />
-                                        </ListItem>
-                                        <ListItem>
-                                        <Input
-                                            placeholder='height'
-                                            label='height'
-                                        />
-                                        </ListItem>
-                                        
-                                    </Card>
-                                    : null
-                            }
-                        </Card>
-
-                        <Card>
-                            <CardItem>
-                                <Text>Stunting?</Text>
-                            </CardItem>
-                            <CardItem>
-                                <Text style={styles.textStyle}>Yes:</Text>
-                                <Radio
-                                    // eslint-disable-next-line max-len
-                                    onPress={() => this.setState({ stunting: 'yes', isHidden2:true})
-                                    }
-                                    selected={this.state.stunting === 'yes'}
-                                />
-                                <Text style={styles.textStyle}>No:</Text>
-                                <Radio
-                                    // eslint-disable-next-line max-len
-                                    onPress={() => this.setState({ stunting: 'no', isHidden2:false })}
-
-                                    selected={this.state.stunting === 'no'}
-                                />
-                            </CardItem>
-                            {
-                                this.state.isHidden2 ?
-                                    <Card>
-                                        <ListItem>
-                                        <Input
-                                            placeholder='age'
-                                            label='Age'
-                                        />
-                                        </ListItem>
-                                        <ListItem>
-                                        <Input
-                                            placeholder='height'
-                                            label='height'
-                                        />
-                                        </ListItem>
-                                        
-                                    </Card>
-                                    : null
-                            }
-                        </Card>
-
-                        <Card>
-                            <CardItem>
-                                <Text>New born with low birth weight less then 2500 grams?</Text>
-                            </CardItem>
-                            <CardItem>
-                                <Text style={styles.textStyle}>Yes:</Text>
-                                <Radio
-                                    // eslint-disable-next-line max-len
-                                    onPress={() => this.setState({  birthweightSelected: 'yes' })
-                                    }
-                                    selected={this.state. birthweightSelected === 'yes'}
-                                />
-                                <Text style={styles.textStyle}>No:</Text>
-                                <Radio
-                                    // eslint-disable-next-line max-len
-                                    onPress={() => this.setState({  birthweightSelected: 'no', })}
-
-                                    selected={this.state. birthweightSelected === 'no'}
-                                />
-                            </CardItem>
-                        </Card>
-
-                        <Card>
-                            <CardItem>
-                                <Text>Early iniation of Breastfeeding?</Text>
-                            </CardItem>
-                            <CardItem>
-                                <Text style={styles.textStyle}>Yes:</Text>
-                                <Radio
-                                    // eslint-disable-next-line max-len
-                                    onPress={() => this.setState({ breastfeedSelected: 'yes' })
-                                    }
-                                    selected={this.state.breastfeedSelected === 'yes'}
-                                />
-                                <Text style={styles.textStyle}>No:</Text>
-                                <Radio
-                                    // eslint-disable-next-line max-len
-                                    onPress={() => this.setState({ breastfeedSelected: 'no', })}
-
-                                    selected={this.state.breastfeedSelected === 'no'}
-                                />
-                            </CardItem>
-                        </Card>
-
-                        <Card>
-                            <CardItem>
-                                <Text>Exclusive Breastfeeding?</Text>
-                            </CardItem>
-                            <CardItem>
-                                <Text style={styles.textStyle}>Yes:</Text>
-                                <Radio
-                                    // eslint-disable-next-line max-len
-                                    onPress={() => this.setState({  feedSelected: 'yes' })
-                                    }
-                                    selected={this.state. feedSelected === 'yes'}
-                                />
-                                <Text style={styles.textStyle}>No:</Text>
-                                <Radio
-                                    // eslint-disable-next-line max-len
-                                    onPress={() => this.setState({  feedSelected: 'no', })}
-
-                                    selected={this.state. feedSelected === 'no'}
-                                />
-                            </CardItem>
-                        </Card>
-
-                        <Card>
-                            <CardItem>
-                                <Text>Children inititaed appropriate complementary feeding?</Text>
-                            </CardItem>
-                            <CardItem>
-                                <Text style={styles.textStyle}>Yes:</Text>
-                                <Radio
-                                    // eslint-disable-next-line max-len
-                                    onPress={() => this.setState({  compliSelected: 'yes' })
-                                    }
-                                    selected={this.state.compliSelected === 'yes'}
-                                />
-                                <Text style={styles.textStyle}>No:</Text>
-                                <Radio
-                                    // eslint-disable-next-line max-len
-                                    onPress={() => this.setState({  compliSelected: 'no', })}
-
-                                    selected={this.state. compliSelected === 'no'}
-                                />
-                            </CardItem>
-                        </Card>
-
-                        <Card>
-                            <CardItem>
-                                <Text>Institutional deliveries?</Text>
-                            </CardItem>
-                            <CardItem>
-                                <Text style={styles.textStyle}>Yes:</Text>
-                                <Radio
-                                    // eslint-disable-next-line max-len
-                                    onPress={() => this.setState({  institutionSelected: 'yes' })
-                                    }
-                                    selected={this.state. institutionSelected === 'yes'}
-                                />
-                                <Text style={styles.textStyle}>No:</Text>
-                                <Radio
-                                    // eslint-disable-next-line max-len
-                                    onPress={() => this.setState({  institutionSelected: 'no', })}
-
-                                    selected={this.state. institutionSelected === 'no'}
-                                />
-                            </CardItem>
-                        </Card>
-
-
-                        <ListItem>
-                            <Button
-                                block success
-                                style={{
-                                    width: Dimensions.get('window').width - 40,
-                                    marginLeft: 0,
-                                    marginRight: 0
-                                }}
-                            >
-                                <Text>Add</Text>
+            <ScrollView>
+                <Card>
+                    <ChildNutritionForm {...this.props} />
+                    <CardItem>
+                    <Button
+                     block success
+                     style={{
+                         width: Dimensions.get('window').width - 40,
+                         marginLeft: 0,
+                         marginRight: 0
+                     }} 
+                   onPress={this.onButtonPress.bind(this)}>
+                                <Text style={styles.loginText}>ADD</Text>
                             </Button>
-                        </ListItem>
 
-                    </Content>
+                    </CardItem>
+                </Card>
+            </ScrollView>
 
-                </ScrollView>
-            </Container>
         );
     }
 }
 
+const resizeMode = 'center';
+
 const styles = StyleSheet.create({
-    textStyle: {
-        padding: 5
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        //
+        // '#DCDCDC
+        backgroundColor: '#275DAD',
+    },
+
+    mainview: {
+        margin: 18
+    },
+    card: {
+        backgroundColor: '#FFFFFF',
+        borderRadius: 10,
+        marginTop: 10,
+        marginBottom: 10,
+        flexDirection: 'row',
+        width: 350,
+        height: 45,
+        alignItems: 'center',
+    },
+    childtitle: {
+        width: 350,
+        height: 45,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: '#275DAD',
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
+    inputContainer: {
+
+        borderBottomColor: '#F5FCFF',
+        backgroundColor: '#FFFFFF',
+        borderRadius: 30,
+        borderBottomWidth: 1,
+        width: 350,
+        height: 45,
+        marginBottom: 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+
+    },
+    inputs: {
+        height: 45,
+        marginLeft: 16,
+        borderBottomColor: '#FFFFFF',
+        flex: 1,
+        color: '#275DAD'
+    },
+    dateblock: {
+        width: '40%',
+        height: 45,
+        marginLeft: 30,
+        borderWidth: 0,
+        // marginLeft: 16,
+        // borderBottomColor: '#FFFFFF',
+        flex: 1,
+        color: '#355870',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    picker: {
+        width: 200,
+        borderColor: 'black',
+        borderWidth: 1,
+        height: 45,
+        marginLeft: 16,
+        borderBottomColor: '#FFFFFF',
+        flex: 1,
+    },
+    pickerItem: {
+        color: '#1F1F1F'
+    },
+    inputIcon: {
+        width: 30,
+        height: 30,
+        marginRight: 15,
+        justifyContent: 'center'
+    },
+    buttonContainer: {
+        height: 45,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 20,
+        width: 300,
+        borderRadius: 30,
+        backgroundColor: 'transparent'
+    },
+    btnByRegister: {
+        height: 15,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 20,
+        width: 300,
+        backgroundColor: 'transparent'
+    },
+    loginButton: {
+        backgroundColor: '#00b5ec',
+
+        shadowColor: '#808080',
+        shadowOffset: {
+            width: 0,
+            height: 9,
+        },
+        shadowOpacity: 0.50,
+        shadowRadius: 12.35,
+
+        elevation: 19,
+    },
+    loginText: {
+        color: 'white',
+    },
+    bgImage: {
+        flex: 1,
+        resizeMode,
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        justifyContent: 'center',
+    },
+    btnText: {
+        color: 'white',
+        fontWeight: 'bold',
+        textShadowColor: 'rgba(0, 0, 0, 0.75)',
+        textShadowOffset: { width: -1, height: 1 },
+        textShadowRadius: 10
+    },
+    textByRegister: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        textShadowColor: 'rgba(0, 0, 0, 0.75)',
+        textShadowOffset: { width: -1, height: 1 },
+        textShadowRadius: 10
     }
 });
 
-export { ChildNutrition };
+const mapStateToProps = (state) => {
+    console.log(state);
+    const { HNumber, CName, Age, weight, under, wast, stunt, lowbirth, breastfeed, exfeed, cfeed, ideli } = state.nutrition;
+    console.log('Age here', Age);
+    return { HNumber, CName, Age, weight, under, wast, stunt, lowbirth, breastfeed, exfeed, cfeed, ideli };
+};
 
+export default connect(mapStateToProps, {
+    NutritionUpdate, NutritionCreate,
+})(ChildNutrition);

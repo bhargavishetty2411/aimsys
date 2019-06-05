@@ -18,7 +18,7 @@ class HealthSupplyOption1 extends Component {
   render() {
     return (
 
-
+    
       <Form>
 
         {/**********************Oral rehydration salts ****************************/}
@@ -151,6 +151,7 @@ class HealthSupplyOption1 extends Component {
             modalTransparent={false}
             animationType={"fade"}
             androidMode={"default"}
+
             placeHolderText="Select date"
             textStyle={{ color: "green" }}
             placeHolderTextStyle={{ color: "#d3d3d3" }}

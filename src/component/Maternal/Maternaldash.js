@@ -7,11 +7,11 @@
  */
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 
 class MaternalDash extends Component {
     static navigationOptions = {
-        title: 'Home',
+        title: 'Maternal',
         headerStyle: {
             backgroundColor: '#355870',
         },
@@ -23,49 +23,45 @@ class MaternalDash extends Component {
 
     render() {
         return (
+
+
+
             <View style={styles.container}>
                 <View style={styles.bottom}>
                     <View style={styles.bottomitem}>
-                        <TouchableOpacity
-                            style={styles.bottomitemInner}
-                            onPress={() => this.props.navigation.navigate('ChildRegistration')}
-                        >
-                            <Text style={styles.bottomitemInnerContent}>{'Child \n Registration'}</Text>
+                        <TouchableOpacity style={styles.bottomitemInner} onPress={() => this.props.navigation.navigate('ChildTab')} >
+                            <View>
+                                <Image style={styles.icon} source={require('../../images/mal_childregistration.png')} />
+                            </View>
                         </TouchableOpacity>
                     </View>
 
                     <View style={styles.bottomitem}>
-                        <TouchableOpacity
-                            style={styles.bottomitemInner}
-                            onPress={() => this.props.navigation.navigate('InjectionRecords')}
-                        >
-                            <Text style={styles.bottomitemInnerContent}>
-                                {'Injection \n Records'}
-                            </Text>
+                        <TouchableOpacity style={styles.bottomitemInner} onPress={() => this.props.navigation.navigate('InjectionTab')}  >
+                            <View>
+                                <Image style={styles.icon} source={require('../../images/mal_injectionrecords.png')} />
+                            </View>
                         </TouchableOpacity>
                     </View>
 
                     <View style={styles.bottomitem}>
-                        <TouchableOpacity
-                            style={styles.bottomitemInner}
-                            onPress={() => this.props.navigation.navigate('ChildNutrition')}
-                        >
-                            <Text style={styles.bottomitemInnerContent}>
-                                {'Child \n Nutrition'}
-                            </Text>
+                        <TouchableOpacity style={styles.bottomitemInner} onPress={() => this.props.navigation.navigate('NutritionTab')} >
+                            <View>
+                                <Image style={styles.icon} source={require('../../images/mal_childnutrition.png')} />
+                            </View>
                         </TouchableOpacity>
                     </View>
 
                     <View style={styles.bottomitem}>
-                        <TouchableOpacity
-                            style={styles.bottomitemInner}
-                            onPress={() => this.props.navigation.navigate('FoodNutri')}
-                        >
-                            <Text style={styles.bottomitemInnerContent}> {'Food \n Details'}</Text>
+                        <TouchableOpacity style={styles.bottomitemInner} onPress={() => this.props.navigation.navigate('InjectionNotification')} >
+                            <View>
+                                <Image style={styles.icon} source={require('../../images/mal_notification.png')} />
+                            </View>
                         </TouchableOpacity>
                     </View>
                 </View>
             </View>
+
         );
     }
 }
@@ -74,22 +70,22 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
-
     bottom: {
-        height: '50%',
+        height: '55%',
         backgroundColor: '#fff',
         flexDirection: 'row',
         flexWrap: 'wrap',
-        padding: 5,
+        padding: 3,
     },
     bottomitem: {
         width: '50%',
         height: '50%',
-        padding: 5,
+        padding: 8
+        ,
     },
     bottomitemInner: {
         flex: 1,
-        backgroundColor: '#395870',
+        backgroundColor: '#275DAD',
         alignItems: 'center',
         justifyContent: 'center',
 
@@ -99,8 +95,24 @@ const styles = StyleSheet.create({
         color: '#fff',
         textAlign: 'center',
         padding: 5,
-    }
+    },
+
+    menuBox: {
+        backgroundColor: '#275DAD',
+        width: 100,
+        height: 100,
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin: 12
+    },
+    icon: {
+        width: 200,
+        height: 200,
+    },
+    info: {
+        fontSize: 22,
+        color: '#696969',
+    },
 
 });
-
 export { MaternalDash };

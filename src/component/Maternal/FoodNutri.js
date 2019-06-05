@@ -297,4 +297,4 @@ const styles = {
     }
 };
 
-export { FoodNutri };
+export default FoodNutri ;

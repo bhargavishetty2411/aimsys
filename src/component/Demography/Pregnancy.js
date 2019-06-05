@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { CardItem, Button } from 'native-base';
+import { View, StyleSheet, Text, Dimensions, Alert } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Input, Card, CardSection, Button, MyDatepicker, Radio1 } from '../Common';
+import { connect } from 'react-redux';
+import { pregnancyUpdate, PregnancyCreate } from '../../actions';
+import { Card } from '../Common';
+import PregnancyForm from './PregnancyForm';
 
 class Pregnancy extends Component {
     static navigationOptions = {
@@ -14,115 +18,194 @@ class Pregnancy extends Component {
             fontWeight: 'bold',
         },
     };
+    onButtonPress() {
+        console.log('clicked');
+
+        const { HHNumber, PregnantName, NPregnant, LPerioddate, FirstDose, SecondDose, DeliveryDate, Dplace, FirstWeightDate, Nchild } = this.props;
+        if (HHNumber === undefined || PregnantName === undefined || NPregnant === undefined || LPerioddate === undefined || DeliveryDate === undefined) {
+            Alert.alert(
+                'Enter All The Details',
+                'Record Not Inserted');
+        }
+        else {
+
+            this.props.PregnancyCreate({ HHNumber, PregnantName, NPregnant, LPerioddate, FirstDose, SecondDose, DeliveryDate, Dplace, FirstWeightDate, Nchild });
+        }
+    }
     render() {
+
         return (
             <ScrollView>
-            <View>
-                <Card>
-                    <CardSection>
-                        <Input
-                            placeholder="Enter The HouseHold Number"
-                            autoCorrect={false}
-                            label="HouseHoldNumber"
-                        />
-                    </CardSection>
+                <View>
+                    <Card>
+                        <PregnancyForm {...this.props} />
+                        <CardItem>
 
-                    <CardSection>
-                        <Input
-                            placeholder="Enter Pregnant Name"
-                            autoCorrect={false}
-                            label="Pregnant Name"
-                        />
-                    </CardSection>
+                        <Button
+                                block success
+                                style={{ width: Dimensions.get('window').width - 40, marginLeft: 0, marginRight: 0 }}
+                                onPress={this.onButtonPress.bind(this)}>
+                                <Text style={styles.loginText}>Add</Text>
+                            </Button>
 
-                    <CardSection>
-                        <Input
-                            placeholder="Enter The Phone Number"
-                            autoCorrect={false}
-                            label="Phone Number"
+                        </CardItem>
 
-                        />
-                    </CardSection>
-
-                    <CardSection>
-                        <Input
-                            placeholder="Enter Number of Pregnant"
-                            autoCorrect={false}
-                            label="Number of Pregnant"
-
-                        />
-                    </CardSection>
-
-                    <CardSection>
-                        <MyDatepicker label=" Last Period Date" />
-                    </CardSection>
-
-                    <CardSection>
-                        <MyDatepicker label=" Expected Delivery Date" />
-                    </CardSection>
-
-                    <CardSection>
-                        <Text>T T date</Text>
-                    </CardSection>
-                    <CardSection>
-                        <MyDatepicker label=" 1st Dose" />
-                    </CardSection>
-
-                    <CardSection>
-                        <MyDatepicker label=" 2nd Dose" />
-                    </CardSection>
-
-                    <CardSection>
-                        <MyDatepicker label=" Delivery Date" />
-                    </CardSection>
-
-                    <CardSection>
-                        <Input
-                            placeholder="Enter Delivery Place"
-                            autoCorrect={false}
-                            label="Delivery Place"
-
-                        />
-                    </CardSection>
-
-
-                    <CardSection>
-                        <Radio1 labelTitle="Born or Died"
-                            label1="Born"
-                            label2="Died"
-                        />
-                    </CardSection>
-
-                    <CardSection>
-                        <Radio1 labelTitle="Gender"
-                            label1="Male"
-                            label2="female"
-                        />
-                    </CardSection>
-
-                    <CardSection>
-                        <MyDatepicker label=" First weight Taken Date" />
-                    </CardSection>
-
-                    <CardSection>
-                        <Input
-                            placeholder="Enter Number of Child Registered in Family Book "
-                            autoCorrect={false}
-                            label="Number of Child Registered Family Book"
-
-                        />
-                    </CardSection>
-
-                    <CardSection>
-                        <Button children="Add" />
-                        <Button children="update" />
-                    </CardSection>
-
-                </Card>
-            </View>
+                    </Card>
+                </View>
             </ScrollView>
         );
     }
 }
 
-export { Pregnancy }; 
+const resizeMode = 'center';
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        //
+        // '#DCDCDC
+        backgroundColor: '#275DAD',
+    },
+
+    mainview: {
+        margin: 18
+    },
+    card: {
+        backgroundColor: '#FFFFFF',
+        borderRadius: 10,
+        marginTop: 10,
+        marginBottom: 10,
+        flexDirection: 'row',
+        width: 350,
+        height: 45,
+        alignItems: 'center',
+    },
+    childtitle: {
+        width: 350,
+        height: 45,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: '#275DAD',
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
+    inputContainer: {
+
+        borderBottomColor: '#F5FCFF',
+        backgroundColor: '#FFFFFF',
+        borderRadius: 30,
+        borderBottomWidth: 1,
+        width: 350,
+        height: 45,
+        marginBottom: 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+
+    },
+    inputs: {
+        height: 45,
+        marginLeft: 16,
+        borderBottomColor: '#FFFFFF',
+        flex: 1,
+        color: '#275DAD'
+    },
+    dateblock: {
+        width: '40%',
+        height: 45,
+        marginLeft: 30,
+        borderWidth: 0,
+        // marginLeft: 16,
+        // borderBottomColor: '#FFFFFF',
+        flex: 1,
+        color: '#355870',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    picker: {
+        width: 200,
+        borderColor: 'black',
+        borderWidth: 1,
+        height: 45,
+        marginLeft: 16,
+        borderBottomColor: '#FFFFFF',
+        flex: 1,
+    },
+    pickerItem: {
+        color: '#1F1F1F'
+    },
+    inputIcon: {
+        width: 30,
+        height: 30,
+        marginRight: 15,
+        justifyContent: 'center'
+    },
+    buttonContainer: {
+        height: 45,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 20,
+        width: 395,
+        borderRadius: 30,
+        backgroundColor: 'transparent'
+    },
+    btnByRegister: {
+        height: 15,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 20,
+        width: 300,
+        backgroundColor: 'transparent'
+    },
+    loginButton: {
+        backgroundColor: '#00b5ec',
+
+        shadowColor: '#808080',
+        shadowOffset: {
+            width: 0,
+            height: 9,
+        },
+        shadowOpacity: 0.50,
+        shadowRadius: 12.35,
+
+        elevation: 19,
+    },
+    loginText: {
+        color: 'white',
+    },
+    bgImage: {
+        flex: 1,
+        resizeMode,
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        justifyContent: 'center',
+    },
+    btnText: {
+        color: 'white',
+        fontWeight: 'bold',
+        textShadowColor: 'rgba(0, 0, 0, 0.75)',
+        textShadowOffset: { width: -1, height: 1 },
+        textShadowRadius: 10
+    },
+    textByRegister: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        textShadowColor: 'rgba(0, 0, 0, 0.75)',
+        textShadowOffset: { width: -1, height: 1 },
+        textShadowRadius: 10
+    }
+});
+
+
+
+const mapStateToProps = (state) => {
+    const { HHNumber, PregnantName, PhoneNumber, NPregnant, LPerioddate, FirstDose, SecondDose, DeliveryDate, Dplace, FirstWeightDate, Nchild } = state.PregnancyForm;
+    return { HHNumber, PregnantName, PhoneNumber, NPregnant, LPerioddate, FirstDose, SecondDose, DeliveryDate, Dplace, FirstWeightDate, Nchild };
+};
+export default connect(mapStateToProps, { pregnancyUpdate, PregnancyCreate })(Pregnancy); 
